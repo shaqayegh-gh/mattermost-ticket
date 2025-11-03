@@ -1,0 +1,35 @@
+name: Bug report
+description: Report a problem to help us improve
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of the problem.
+    validations:
+      required: true
+  - type: input
+    id: server-version
+    attributes:
+      label: Mattermost Server Version
+      placeholder: e.g., 10.12.0
+  - type: input
+    id: plugin-version
+    attributes:
+      label: Plugin Version
+      placeholder: e.g., 1.0.0
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Provide steps so we can reproduce the issue.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Paste relevant server or plugin logs.
+
+
