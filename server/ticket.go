@@ -125,7 +125,7 @@ func (p *Plugin) attachReopenButton(post *model.Post, postID, channelID string) 
 	attachment := &model.SlackAttachment{
 		Text:     "Click below to reopen this ticket",
 		Fallback: "Reopen Ticket",
-		Color:    "0ddb21",
+		Color:    "#0ddb21",
 		Actions: []*model.PostAction{
 			{
 				Id:   "runreopen",
