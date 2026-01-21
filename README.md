@@ -74,15 +74,13 @@ docker restart mattermost
      support
      dev-help
      ```
-3. In **"Team Members Configuration"** (`TeamMembersConfig`), enter JSON:
+3. In **"Ticket Mention Configuration"** (`TicketMentionConfig`), enter JSON:
 
 ```json
 {
-  "issuance": ["john.doe", "jane.smith"],
-  "design": ["designer1", "designer2"],
-  "marketing": ["marketer1", "marketer2"],
-  "devops": ["devops1", "devops2"],
-  "all": ["admin", "manager"]
+  "tickets": ["john.doe", "jane.smith"],
+  "tickets__team1": ["designer1", "designer2"],
+  "support": ["john.doe", "jane.smith"],
 }
 ```
 
@@ -90,7 +88,7 @@ docker restart mattermost
 
 **Important Notes:**
 - Use actual Mattermost usernames (not display names)
-- Users in `"all"` will be mentioned in every ticket
+- Users in `channel name` will be mentioned in every ticket in channel.
 - Team names must match exactly: `issuance`, `design`, `marketing`, etc.
 
 ### 4. Test the Plugin

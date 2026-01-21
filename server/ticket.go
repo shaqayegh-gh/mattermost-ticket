@@ -21,7 +21,7 @@ func buildPostPriority(priority string) *model.PostPriority {
 
 // createTicket creates a new ticket post with the provided data
 func (p *Plugin) createTicket(ticketData TicketDialog, channelId, userId string) error {
-	teamMembers := p.getTeamMembers(ticketData.TeamName)
+	ticketMentions := p.getTicketMentionUsers(ticketData.TeamName, channelId)
 
 	priority := ticketData.Priority
 	if priority == "" {
@@ -48,7 +48,7 @@ func (p *Plugin) createTicket(ticketData TicketDialog, channelId, userId string)
 
 	ticketPost.Metadata = &model.PostMetadata{Priority: buildPostPriority(priority)}
 
-	for _, member := range teamMembers {
+	for _, member := range ticketMentions {
 		ticketPost.Message += fmt.Sprintf(" @%s", member)
 	}
 

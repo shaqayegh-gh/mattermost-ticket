@@ -2,30 +2,34 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"strings"
 
 	"github.com/mattermost/mattermost/server/public/model"
 )
 
-// getTeamMembers returns the members of a specific team from configuration
-func (p *Plugin) getTeamMembers(teamName string) []string {
+// getTicketMentionUsers returns the users that should be mentioned in ticket
+func (p *Plugin) getTicketMentionUsers(teamName string, channelId string) []string {
 	var teamMembers []string
 
 	config := p.API.GetConfig()
 	if config != nil && config.PluginSettings.Plugins[pluginID] != nil {
-		teamMembersConfig := config.PluginSettings.Plugins[pluginID]["teammembersconfig"]
+		teamMembersConfig := config.PluginSettings.Plugins[pluginID]["ticketmentionconfig"]
 
 		if teamMembersConfig != nil {
 			teamMembersStr := teamMembersConfig.(string)
 			if teamMembersStr != "" {
 				var teamMembersMap map[string][]string
 				if err := json.Unmarshal([]byte(teamMembersStr), &teamMembersMap); err == nil {
-					if members, exists := teamMembersMap[teamName]; exists {
+					// Check one channel teamName
+					channelName := p.getChannelName(channelId)
+					configName := fmt.Sprintf("%s__%s", channelName, teamName)
+					if members, exists := teamMembersMap[configName]; exists {
 						teamMembers = append(teamMembers, members...)
 					}
 
-					// Always add "all" members if they exist
-					if allMembers, exists := teamMembersMap["all"]; exists {
+					// Always add channelId members if they exist
+					if allMembers, exists := teamMembersMap[channelName]; exists {
 						teamMembers = append(teamMembers, allMembers...)
 					}
 				} else {
@@ -147,16 +151,21 @@ func (p *Plugin) validateChannel(channelId string) bool {
 		return true
 	}
 
-	channel, err := p.API.GetChannel(channelId)
-	if err != nil {
-		p.API.LogError("Failed to get channel for validation", "error", err.Error(), "channel_id", channelId)
-		return false
-	}
-
+	channelName := p.getChannelName(channelId)
 	for _, name := range allowed {
-		if strings.EqualFold(channel.Name, name) {
+		if strings.EqualFold(channelName, name) {
 			return true
 		}
 	}
 	return false
+}
+
+// Get channel name from it's ID
+func (p *Plugin) getChannelName(channelId string) string {
+	channel, err := p.API.GetChannel(channelId)
+	if err != nil {
+		p.API.LogError("Failed to get channel for validation", "error", err.Error(), "channel_id", channelId)
+		return ""
+	}
+	return channel.Name
 }

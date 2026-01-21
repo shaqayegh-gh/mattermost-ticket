@@ -2,7 +2,7 @@
     "id": "com.github.mattermost-ticket-plugin",
     "name": "Ticket",
     "description": "A plugin to create and manage tickets in Mattermost",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "min_server_version": "7.0.0",
     "homepage_url": "https://github.com/shaqayegh-gh/mattermost-ticket",
     "support_url": "https://github.com/shaqayegh-gh/mattermost-ticket#support",
@@ -30,8 +30,8 @@
                 "default": "tickets"
             },
             {
-                "key": "TeamMembersConfig",
-                "display_name": "Team Members Configuration",
+                "key": "TicketMentionConfig",
+                "display_name": "Ticket User Mentions Configuration",
                 "type": "longtext",
                 "help_text": "JSON configuration for team members. Format: {\"team_name\": [\"username1\", \"username2\"], \"all\": [\"jack\", \"sara\"]}. The 'all' key will always be mentioned in every ticket.",
                 "default": "{\"issuance\": [\"user1\", \"user2\"], \"all\": [\"jack\", \"sara\"]}"
