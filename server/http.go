@@ -66,6 +66,7 @@ func (p *Plugin) handleDialogSubmit(w http.ResponseWriter, r *http.Request) {
 	if descriptionVal, ok := request.Submission["description"].(string); ok {
 		ticketData.Description = descriptionVal
 	}
+	ticketData.Summary = request.Submission["summary"].(string)
 
 	if ticketData.TeamName == "" || ticketData.ProjectName == "" || ticketData.Environment == "" || ticketData.Description == "" {
 		w.Header().Set("Content-Type", "application/json")

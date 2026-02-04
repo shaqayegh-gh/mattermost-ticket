@@ -5,7 +5,7 @@ GOARCH ?= $(shell go env GOARCH)
 
 # Plugin information
 PLUGIN_NAME := com.github.mattermost-ticket-plugin
-PLUGIN_VERSION := 1.0.1
+PLUGIN_VERSION := 1.1.0
 
 # Build directories
 DIST_DIR := dist

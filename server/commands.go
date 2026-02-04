@@ -51,6 +51,7 @@ func (p *Plugin) handleTicketCommand(c *plugin.Context, args *model.CommandArgs)
 					Type:        "select",
 					Placeholder: "Select environment",
 					Options:     environmentOptions,
+					Default:     "develop",
 				},
 				{
 					DisplayName: "Message Priority",
@@ -59,6 +60,14 @@ func (p *Plugin) handleTicketCommand(c *plugin.Context, args *model.CommandArgs)
 					Placeholder: "Select priority",
 					Options:     priorityOptions,
 					Default:     "standard",
+				},
+				{
+					DisplayName: "Summary",
+					Name:        "summary",
+					Type:        "text",
+					Placeholder: "Short description",
+					MaxLength:   1000,
+					Optional:    true,
 				},
 				{
 					DisplayName: "Issue Description",

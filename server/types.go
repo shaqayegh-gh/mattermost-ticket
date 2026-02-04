@@ -7,4 +7,5 @@ type TicketDialog struct {
 	Environment string `json:"environment"`
 	Priority    string `json:"priority"`
 	Description string `json:"description"`
+	Summary     string `json:"summary,omitempty"`
 }

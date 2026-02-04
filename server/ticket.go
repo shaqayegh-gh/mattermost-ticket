@@ -23,9 +23,14 @@ func buildPostPriority(priority string) *model.PostPriority {
 func (p *Plugin) createTicket(ticketData TicketDialog, channelId, userId string) error {
 	ticketMentions := p.getTicketMentionUsers(ticketData.TeamName, channelId)
 
-	priority := ticketData.Priority
-	if priority == "" {
-		priority = "standard"
+	priority := "standard"
+	if ticketData.Priority != "" {
+		priority = ticketData.Priority
+	}
+
+	summary := "No summary provided"
+	if ticketData.Summary != "" {
+		summary = ticketData.Summary
 	}
 
 	// Create ticket post
@@ -36,12 +41,14 @@ func (p *Plugin) createTicket(ticketData TicketDialog, channelId, userId string)
 			"**Ticket Details:**\n\n"+
 			"• Team: **%s**\n"+
 			"• Project: **%s**\n"+
-			"• Environment: **%s**\n\n\n"+
+			"• Environment: **%s**\n"+
+			"• Summary: **%s**\n\n\n"+
 			"**Status:** Open\n\n"+
 			"💡 **To mark as resolved:** Use `/resolve %s`",
 			ticketData.TeamName,
 			ticketData.ProjectName,
 			ticketData.Environment,
+			summary,
 			"placeholder"),
 		Type: model.PostTypeDefault,
 	}
